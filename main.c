@@ -1,45 +1,21 @@
-#include <SDL2/SDL.h>
-
-#define SCREEN_WIDTH 640
-#define SCREEN_HEIGHT 480
-
-int throw_sdl_err(const char* fmt)
-{
-    SDL_LogError(
-        SDL_LOG_CATEGORY_APPLICATION,
-        fmt,
-        SDL_GetError()
-    );
-    return 3; // constant error code.
-}
+#include "sdl_func.h"
 
 int main(int argc, char** argv)
 {
     SDL_Window*     window;
     SDL_Renderer*   renderer;
     SDL_Surface*    surface;
+    SDL_Surface*    surface2;
     SDL_Texture*    texture;
     SDL_Event       ev;
 
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        return throw_sdl_err("Could not init the SDL: %s");
-    }
-
-    if (SDL_CreateWindowAndRenderer(
-        SCREEN_WIDTH, SCREEN_HEIGHT,
-        SDL_WINDOW_RESIZABLE,
-        &window, &renderer
-    )) { return throw_sdl_err("Could not create new window and renderer: %s"); }
+    init_sdl(&window, &renderer);
 
     surface = SDL_LoadBMP("image/maldives.bmp");
-    if (!surface) {
-        return throw_sdl_err("Could not load BMP image: %s");
-    }
+    // surface2 = SDL_LoadBMP("image/chrismas_ans.bmp");
 
     texture = SDL_CreateTextureFromSurface(renderer, surface);
-    if (!texture) {
-        return throw_sdl_err("Could not create new texture from surface: %s");
-    }
+    // texture = SDL_CreateTextureFromSurface(renderer, surface2);
 
     SDL_FreeSurface(surface); // free a RGB surface (?)
 
