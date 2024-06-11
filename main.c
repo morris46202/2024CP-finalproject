@@ -2,22 +2,24 @@
 
 int main(int argc, char** argv)
 {
-    SDL_Window*     window;
-    SDL_Renderer*   renderer;
-    SDL_Surface*    surface;
-    SDL_Surface*    surface2;
-    SDL_Texture*    texture;
+    SDL_Window     *window;
+    SDL_Renderer   *renderer;
+    SDL_Surface    *screen;
     SDL_Event       ev;
+    TTF_Font       *iansui = TTF_OpenFont("font/sans.ttf", 24);
+
+    SDL_Color       white = {255, 255, 255};
+    SDL_Color       black = {0, 0, 0};
+
+    SDL_Texture    *test1;
+    SDL_Texture    *test2;
 
     init_sdl(&window, &renderer);
 
-    surface = SDL_LoadBMP("image/maldives.bmp");
-    // surface2 = SDL_LoadBMP("image/chrismas_ans.bmp");
+    test1 = load_bmp("image/maldives.bmp", renderer);
+    test2 = load_png("image/pop.png", renderer);
 
-    texture = SDL_CreateTextureFromSurface(renderer, surface);
-    // texture = SDL_CreateTextureFromSurface(renderer, surface2);
-
-    SDL_FreeSurface(surface); // free a RGB surface (?)
+    int x = 0, y = 0;
 
     while (1) {
         SDL_PollEvent(&ev);
@@ -27,11 +29,22 @@ int main(int argc, char** argv)
 
         SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0x00);
         SDL_RenderClear(renderer);
-        SDL_RenderCopy(renderer, texture, NULL, NULL);
+
+        renderTexture(test1, renderer, 0, 0, 900, 600);
+        renderTexture(test2, renderer, x, y, 100, 100);
+        // renderTexture(text1, renderer, 0, 0, 100, 100);
+        
         SDL_RenderPresent(renderer);
     } // window loop
 
-    SDL_DestroyTexture(texture);
+
+
+    SDL_DestroyTexture(test1);
+    SDL_DestroyTexture(test2);
+    // SDL_DestroyTexture(text1);
+    SDL_FreeSurface(screen);
+    TTF_CloseFont(iansui);
+
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
 
