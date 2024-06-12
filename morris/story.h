@@ -29,10 +29,10 @@ mo_return *easy_find_dialogue(char* line);
 mo_return *init();
 
 void hard_read_story(char* filename);
-int32_t hard_find_scene(char* line, char* scene);
-int32_t hard_find_dialogue(char* line, char* speaker, char* dialogue);
-int32_t hard_find_choice(char* line, char* choice, int32_t* jump_to);
-int32_t hard_find_event(char* line, char* event, char* attribute, char* operation, int32_t* value);
+mo_return *hard_find_scene(char* line, char* scene);
+mo_return *hard_find_dialogue(char* line, char* speaker, char* dialogue);
+mo_return *hard_find_choice(char* line, char* choice, int32_t* jump_to);
+mo_return *hard_find_event(char* line, char* event, char* attribute, char* operation, int32_t* value);
 
 
 
