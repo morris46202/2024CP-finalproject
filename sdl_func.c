@@ -44,16 +44,16 @@ SDL_Texture *load_png(char *filepath, SDL_Renderer *renderer){
     return texture;
 }
 
-SDL_Texture *load_text(char *text, TTF_Font *font, SDL_Color color, SDL_Renderer *renderer){
-    SDL_Surface *surface = TTF_RenderText_Solid(font, text, color);
-    if (surface == NULL) {
-        throw_sdl_err("Could not render text: %s");
-    }
+// SDL_Texture *load_text(char *text, TTF_Font *font, SDL_Color color, SDL_Renderer *renderer){
+//     SDL_Surface *surface = TTF_RenderText_Solid(font, text, color);
+//     if (surface == NULL) {
+//         throw_sdl_err("Could not render text: %s");
+//     }
 
-    SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
-    SDL_FreeSurface(surface);
-    return texture;
-}
+//     SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
+//     SDL_FreeSurface(surface);
+//     return texture;
+// }
 
 void renderTexture(SDL_Texture *tex, SDL_Renderer *renderer, int x, int y, int w, int h){
   SDL_Rect dst;
