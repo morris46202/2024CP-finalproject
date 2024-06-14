@@ -1,25 +1,33 @@
 #include "sdl_func.h"
+#include "story.h"
 
-int main(int argc, char** argv)
-{
+int main(int argc, char** argv){
     SDL_Window     *window;
     SDL_Renderer   *renderer;
     SDL_Surface    *screen;
     SDL_Event       ev;
-    TTF_Font       *iansui = TTF_OpenFont("font/sans.ttf", 24);
 
     SDL_Color       white = {255, 255, 255};
     SDL_Color       black = {0, 0, 0};
 
-    SDL_Texture    *test1;
-    SDL_Texture    *test2;
+    SDL_Texture    *scene;
+    SDL_Texture    *main_character;
+    SDL_Texture    *other_character;
+    SDL_Texture    *text;
 
     init_sdl(&window, &renderer);
 
-    test1 = load_bmp("image/maldives.bmp", renderer);
-    test2 = load_png("image/pop.png", renderer);
+    //path buffer
+    char *scene_path = get_scene(line);
+    char *speaker = get_speaker(line);
+    char *dialogue = get_dialogue(line);
 
-    int x = 0, y = 0;
+
+    FILE *fp = fopen("test.txt", "r");
+    if(fp == NULL){
+        printf("File not found\n");
+        return 1;
+    }
 
     while (1) {
         SDL_PollEvent(&ev);
@@ -30,20 +38,48 @@ int main(int argc, char** argv)
         SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0x00);
         SDL_RenderClear(renderer);
 
-        renderTexture(test1, renderer, 0, 0, 900, 600);
-        renderTexture(test2, renderer, x, y, 100, 100);
-        // renderTexture(text1, renderer, 0, 0, 100, 100);
-        
+        //main loop
+        char *buff = readline(fp);
+        sline *line = parse_line(buff, strlen(buff));
+        switch(line -> kind){
+            case SCENE:
+                // printf("scene: %s\n", scene_path);
+                scene = load_png(scene_path, renderer);
+                free(scene_path);
+                break;
+            case DIALOGUE:
+                if(strcmp(line -> speaker, "肌肉超人") == 0){
+                    main_character = load_png(speaker, renderer);
+                }else{
+                    other_character = load_png(speaker, renderer);
+                }
+
+                printf("%s\n", dialogue);
+                text = load_png(dialogue, renderer);
+                // free(speaker);
+                // free(dialogue);
+                break;
+            case CHOICE:
+                break;
+            case EVENT:
+                break;
+        }
+
+        renderTexture(scene, renderer, 0, 0, 900, 600);
+        renderTexture(other_character, renderer, 300, 100, 100, 100);
+        renderTexture(main_character, renderer, 100, 100, 100, 100);
+        renderTexture(text, renderer, 100, 300, 600, 200);
+
         SDL_RenderPresent(renderer);
+        SDL_Delay(1000);
+        free(buff);
+        free_sline(line);
     } // window loop
 
 
 
-    SDL_DestroyTexture(test1);
-    SDL_DestroyTexture(test2);
-    // SDL_DestroyTexture(text1);
+    SDL_DestroyTexture(scene);
     SDL_FreeSurface(screen);
-    TTF_CloseFont(iansui);
 
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
