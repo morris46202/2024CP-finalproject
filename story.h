@@ -34,6 +34,6 @@ char *get_scene(sline *line);
 
 char *get_speaker(sline *line);
 
-char *get_dialogue(sline *line);
+char *get_dialogue(sline *line, int *len);
 
 void free_sline(sline *line);

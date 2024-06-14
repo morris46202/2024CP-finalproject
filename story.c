@@ -74,15 +74,23 @@ char *get_speaker(sline *line){
         strcpy(ret, "image/character/bighead.png");
     }else if(strcmp(line -> speaker, "洪suki") == 0){
         strcpy(ret, "image/character/pop.png");
+    }else if(strcmp(line -> speaker, "tikili") == 0){
+        strcpy(ret, "image/character/tikili.png");
     }
     return ret;
 }
 
-char *get_dialogue(sline *line){
-    char *ret = (char *)calloc(32, sizeof(char));
-    sprintf(ret, "image/dialogue/%s.png", line -> dialogue);
+char *get_dialogue(sline *line, int *len){
+    char *ret = (char *)calloc(128, sizeof(char));
+    // strncat(ret, "image/dialogue/", 16);
+    (line -> dialogue)[strlen(line -> dialogue) - 1] = '\0'; // remove '\n' at the end of the string
+    *len = strlen(line -> dialogue);
+    strncat(ret, line -> dialogue, strlen(line -> dialogue));
+    // strncat(ret, ".png", 5);
     return ret;
 }
+
+
 
 void free_sline(sline *line){
     if(line -> scene != NULL){
