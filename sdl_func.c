@@ -87,6 +87,10 @@ SDL_Texture *load_text(char *text, TTF_Font *font, SDL_Color color, SDL_Renderer
     if(font == NULL){
         throw_sdl_err("Could not load font: %s");
     }
+    int text_width, text_height;
+    // uint32_t wrap_length = TTF_SizeUTF8(font, text, &text_width, &text_height);
+    // printf("text_width: %d, text_height: %d\n", text_width, text_height);
+    // printf("wrap_length: %d\n", wrap_length); 
     SDL_Surface *surface = TTF_RenderUTF8_Blended(font, text, color);
     if (surface == NULL) {
         throw_sdl_err("Could not render text: %s");
@@ -104,12 +108,4 @@ void renderTexture(SDL_Texture *tex, SDL_Renderer *renderer, int x, int y, int w
   dst.w = w;
   dst.h = h;
   SDL_RenderCopy(renderer, tex, NULL, &dst);
-}
-
-void render_all(SDL_Renderer *renderer, SDL_Texture *scene, SDL_Texture *main_character, SDL_Texture *other_character, SDL_Texture *text, SDL_Texture *message, int message_width){
-    renderTexture(scene, renderer, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-    renderTexture(main_character, renderer, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-    renderTexture(other_character, renderer, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-    renderTexture(text, renderer, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-    renderTexture(message, renderer, 0, 0, message_width, 50);
 }

@@ -8,10 +8,6 @@
 #define SCREEN_WIDTH 1200
 #define SCREEN_HEIGHT 900
 
-typedef struct object{
-    SDL_Texture *texture;
-    SDL_Rect rect;
-} Object;
 
 int throw_sdl_err(const char* fmt);
 
@@ -26,3 +22,5 @@ SDL_Texture *load_png(char *filepath, SDL_Renderer *renderer);
 SDL_Texture *load_text(char *text, TTF_Font *font, SDL_Color color, SDL_Renderer *renderer);
 
 void renderTexture(SDL_Texture *tex, SDL_Renderer *renderer, int x, int y, int w, int h);
+
+void draw_cursor(int opt_count, SDL_Texture *cursor, SDL_Renderer *renderer, int x, int y);
