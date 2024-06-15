@@ -62,6 +62,13 @@ sline *parse_line(char buff[], int len){
             printf("operation: %c\n", line -> operation);
             printf("value: %d\n", line -> value);
             break;
+
+        case 'I':
+            line -> kind = CONDITION;
+            line -> attribute = (char *)calloc(len, sizeof(char));
+            sscanf(buff, "I %c %s %d", &(line -> event), line -> attribute, &(line -> value));
+            printf("if %s >= %d do next line\n", line -> attribute, line -> value);
+            break;
     }
     return line;
 }
@@ -206,14 +213,38 @@ char *get_scene(sline *line){
     return ret;
 }
 
-char *get_speaker(sline *line){
+char *get_speaker(sline *line, char *speaker){
     char *ret = (char *)calloc(32, sizeof(char));
-    if(strcmp(line -> speaker, "肌肉超人") == 0){
+    if(strcmp(line -> speaker, "大頭") == 0){
+        strcpy(speaker, "大頭");
         strcpy(ret, "image/character/bighead.png");
-    }else if(strcmp(line -> speaker, "洪suki") == 0){
-        strcpy(ret, "image/character/pop.png");
-    }else if(strcmp(line -> speaker, "tikili") == 0){
+    }
+    else if(strcmp(line -> speaker, "洪好き") == 0){
+        strcpy(speaker, "洪好き");
+        strcpy(ret, "image/character/suki.png");
+    }
+    else if(strcmp(line -> speaker, "Tikili") == 0){
+        strcpy(speaker, "Tikili");
         strcpy(ret, "image/character/tikili.png");
+    }
+    else if (strcmp(line -> speaker, "女號千") == 0){
+        strcpy(speaker, "女號千");
+        strcpy(ret, "image/character/howard.png");
+    }
+    else if (strcmp(line -> speaker, "林欣芮") == 0){
+        strcpy(speaker, "林欣芮");
+        strcpy(ret, "image/character/shinray.png");
+    }
+    else if (strcmp(line -> speaker, "L紀") == 0){
+        strcpy(speaker, "L紀");
+        strcpy(ret, "image/character/L_age.png");
+    }
+    else if (strcmp(line -> speaker, "媽媽") == 0){
+        strcpy(speaker, "媽媽");
+        strcpy(ret, "image/character/mom.png");
+    }else if (strcmp(line -> speaker, "J cup") == 0){
+        strcpy(speaker, "J cup");
+        strcpy(ret, "image/character/jcup.png");
     }
     return ret;
 }
@@ -230,21 +261,65 @@ char *get_dialogue(sline *line, int *len){
 
 Option *get_choice(sline *line){
     Option *opt = (Option *)calloc(1, sizeof(Option));
-    opt -> text = (char *)calloc(32, sizeof(char));
-    opt -> filepath = (char *)calloc(32, sizeof(char));
+    opt -> text = (char *)calloc(128, sizeof(char));
+    opt -> filepath = (char *)calloc(128, sizeof(char));
     strcpy(opt -> text, line -> choice);
     opt->jump = line -> jump_to;
     opt->text_len = strlen(line -> choice);
-    if(strcmp(line -> choice, "洪suki的口琴") == 0){
-        strcpy(opt->filepath, "image/item/harmonica.png");
-    }else if(strcmp(line -> choice, "tikili的門票") == 0){
-        strcpy(opt->filepath, "image/item/ticket.png");
-    }else if(strcmp(line -> choice, "女號千的3000藍芽鍵盤") == 0){
-        strcpy(opt->filepath, "image/item/keyboard.png");
-    }
     return opt;
 }
 
+int check_condition(GameData *data, sline *line){
+    switch(line -> event){
+        case 'A':
+            Love love;
+            if(strcmp(line -> attribute, "howard_love") == 0){
+                love = LOVE_HOWARD;
+            }else if(strcmp(line -> attribute, "jcup_love") == 0){
+                love = LOVE_JCUP;
+            }else if(strcmp(line -> attribute, "suki_love") == 0){
+                love = LOVE_SUKI;
+            }else if(strcmp(line -> attribute, "tikili_love") == 0){
+                love = LOVE_TIKILI;
+            }else if(strcmp(line -> attribute, "shinray_love") == 0){
+                love = LOVE_SHINRAY;
+            }else{
+                printf("Invalid value %s\n", line -> attribute);
+                return 0;
+            }
+            if(data -> love[love] >= line -> value){
+                return 1;
+            }
+            return 0;
+        case 'B':
+            Item item;
+            if(strcmp(line -> attribute, "太鼓達人會員卡") == 0){
+                item = ITEM_CARD;
+            }else if(strcmp(line -> attribute, "密室逃脫券") == 0){
+                item = ITEM_TICKET;
+            }else if(strcmp(line -> attribute, "腳踏車") == 0){
+                item = ITEM_BIKE;
+            }else if(strcmp(line -> attribute, "毛巾") == 0){
+                item = ITEM_TOWEL;
+            }else if(strcmp(line -> attribute, "期中考優異證書") == 0){
+                item = ITEM_MIDTERM;
+            }else if(strcmp(line -> attribute, "期末考優異證書") == 0){
+                item = ITEM_FINAL;
+            }else if(strcmp(line -> attribute, "異樣的注目") == 0){
+                item = ITEM_SPECIAL;
+            }else{
+                printf("Invalid value\n");
+                return 0;
+            }
+            if(data -> backpack[item] >= line -> value){
+                return 1;
+            }
+            return 0;
+        default:
+            printf("Invalid event\n");
+            return 0;
+    }
+}
 void jump(FILE *fp, int para){
     // fseek(fp, 0, SEEK_SET);
     while(1){
