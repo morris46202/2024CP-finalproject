@@ -52,7 +52,7 @@ bool initSDL(SDL_Window** window, SDL_Renderer** renderer, FILE **fp, TTF_Font *
         throw_sdl_err("Could not load font: %s");
     }
 
-    *fp = fopen("test.txt", "r");
+    *fp = fopen("story.txt", "r");
     if(*fp == NULL){
         printf("File not found\n");
         return 1;
