@@ -3,6 +3,8 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 
+#include "story.h"
+
 #pragma once
 
 #define SCREEN_WIDTH 1200
@@ -20,6 +22,12 @@ SDL_Texture *load_bmp(char *filepath, SDL_Renderer *renderer);
 SDL_Texture *load_png(char *filepath, SDL_Renderer *renderer);
 
 SDL_Texture *load_text(char *text, TTF_Font *font, SDL_Color color, SDL_Renderer *renderer);
+
+void display_data(GameData *data, TTF_Font *Sans, SDL_Color white, SDL_Renderer *renderer);
+
+void display_item(GameData *data, TTF_Font *Sans, SDL_Color white, SDL_Renderer *renderer);
+
+void show_stats(GameData *data);
 
 void renderTexture(SDL_Texture *tex, SDL_Renderer *renderer, int x, int y, int w, int h);
 

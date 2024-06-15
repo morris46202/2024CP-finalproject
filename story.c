@@ -23,7 +23,7 @@ sline *parse_line(char buff[], int len){
             if(strcmp(buff, "###") == 0){
                 line = NULL;
                 printf("file terminated\n");
-                exit(0);
+                return line;
             }
             line -> kind = PARA;
             sscanf(buff, "#%d", &(line -> para));
@@ -70,18 +70,18 @@ void mod_data(GameData *data, sline *line){
     switch(line -> event){
         case 'A':
             Love love;
-            if(strcmp(line -> attribute, "女號千") == 0){
+            if(strcmp(line -> attribute, "howard_love") == 0){
                 love = LOVE_HOWARD;
-            }else if(strcmp(line -> attribute, "JCUP") == 0){
+            }else if(strcmp(line -> attribute, "jcup_love") == 0){
                 love = LOVE_JCUP;
-            }else if(strcmp(line -> attribute, "洪suki") == 0){
+            }else if(strcmp(line -> attribute, "suki_love") == 0){
                 love = LOVE_SUKI;
-            }else if(strcmp(line -> attribute, "tikili") == 0){
+            }else if(strcmp(line -> attribute, "tikili_love") == 0){
                 love = LOVE_TIKILI;
-            }else if(strcmp(line -> attribute, "林欣芮") == 0){
+            }else if(strcmp(line -> attribute, "shinray_love") == 0){
                 love = LOVE_SHINRAY;
             }else{
-                printf("Invalid value\n");
+                printf("Invalid value %s\n", line -> attribute);
                 return;
             }
             if(line -> operation == '+'){

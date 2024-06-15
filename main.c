@@ -26,7 +26,10 @@ int main(int argc, char** argv){
     int             end = 0;
 
     initSDL(&window, &renderer, &fp, &Sans);
-    GameData *game_data = load_game("game_data.txt");
+    GameData *game_data =   load_game("game_data.txt");
+    if(game_data->para != 0){
+        jump(fp, game_data->para);
+    }
 
     while (1) {
         SDL_PollEvent(&ev);
@@ -41,8 +44,7 @@ int main(int argc, char** argv){
         char *buff = readline(fp);
         sline *line = parse_line(buff, strlen(buff));
         if(buff == NULL || line == NULL){
-            printf("End of file\n");
-            break;
+            exit(0);
         }
         switch(line -> kind){
             case PARA:
@@ -88,9 +90,14 @@ int main(int argc, char** argv){
 
                 break;
             case EVENT:
-                
+                mod_data(game_data, line);
+                save_game(game_data, "game_data.txt");
+
                 break;
         }
+        display_data(game_data, Sans, white, renderer);
+        display_item(game_data, Sans, white, renderer);
+        show_stats(game_data);
 
         //x, y, w, h
         renderTexture(scene, renderer, 0, 0, 900, 600);
