@@ -201,13 +201,8 @@ void save_game(GameData *data, char filename[]){
 
 char *get_scene(sline *line){
     char *ret = (char *)calloc(32, sizeof(char));
-    if(strcmp(line -> scene, "sc1") == 0){
-        strcpy(ret, "image/scene/sc1.png");
-    }else if(strcmp(line -> scene, "sc2") == 0){
-        strcpy(ret, "image/scene/sc2.png");
-    }else if(strcmp(line -> scene, "sc3") == 0){
-        strcpy(ret, "image/scene/sc3.png");
-    }
+    strcpy(ret, "image/scene/");
+    strncat(ret, line -> scene, strlen(line -> scene));
     return ret;
 }
 
