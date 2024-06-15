@@ -28,10 +28,10 @@ typedef struct _morris_return {
 
 
 void hard_read_story(char* filename);
-int32_t hard_find_scene(char* line, char* scene);
-int32_t hard_find_dialogue(char* line, char* speaker, char* dialogue);
-int32_t hard_find_choice(char* line, char* choice, int32_t* jump_to);
-int32_t hard_find_event(char* line, char* event, char* attribute, char* operation, int32_t* value);
+mo_return *hard_find_scene(char* line);
+mo_return *hard_find_dialogue(char* line);
+mo_return *hard_find_choice(char* line);
+mo_return *hard_find_event(char* line);
 
 enum {
     SCENE = 1,
@@ -380,61 +380,65 @@ void hard_read_story(char* filename)
 
 
 // find scene in line, it start with '@', success return 1, fail return 0
-int32_t hard_find_scene(char* line, char* scene) 
+mo_return *hard_find_scene(char* line) 
 {
-    if(line[0] == '@'&& line[1] == ' ') {
+    mo_return *result = init();
+    if(line[0] == '@'&& line[1] == ' ') 
+    {
         XD printf("(find_scene)   valid format, the name of scene is \"");
-        line += 2;
+        line += 3;
         XD printf("%s\"\n", line);
-        strcpy(scene, line);
-        return 1;
+        // remove the '\n' at the end of the line
+        char *end = strchr(line, '\n');
+        if(end != NULL) 
+        {
+            *end = '\0';
+        }
+        result->success = 1;
+        result->kind = SCENE;
+        result->scene = line;
     }
     else
     {
         XDD printf("(find_scene)   invalid format\n");
         XDD printf("(find_scene)   line[0] = %c, line[1] = %c\n", line[0], line[1]);
         XDD printf("(find_scene)   It should start with \"@ \"\n");
-        return 0;
+        result->success = 0;
     }
-    return 0;
+    return result;
 }
 
 // find dialogue in line, it start with '-', success return 1, fail return 0
-int32_t hard_find_dialogue(char* line, char* speaker, char* dialogue) 
+mo_return *hard_find_dialogue(char* line) 
 {
+    mo_return *result = init();
+
     if(line[0] == '-' && line[1] == ' ') 
     {
-        XD printf("(find_dialogue)    valid format, the speaker is \"");
-        line += 3;
-
-        char* end = strchr(line, ']');
-        if(end == NULL) {
-            printf("???\"\n");
-            XDD printf("(find_dialogue)    invalid name format\n");
-            return 0;
+        result->success = 1;
+        result->kind = DIALOGUE;
+        char *t_speaker = strtok(line + 3, " ");
+        char *t_dialogue = strtok(NULL, "\n");
+        // remove the ']' at the end of the t_speaker
+        char *end = strchr(t_speaker, ']');
+        if(end != NULL) 
+        {
+            *end = '\0';
         }
-        *end = '\0';
-        
-        XD printf("%s\", the dialogue is \"", line); //print name
-        strcpy(speaker, line);
-        line = end + 1;
-        
-        XD printf("%s\"\n", line); // print dialogue
-        strcpy(dialogue, line);
-
-        return 1;
+        // remove the '\n' at the end of the t_dialogue
+        end = strchr(t_dialogue, '\n');
+        if(end != NULL) 
+        {
+            *end = '\0';
+        }
+        result->speaker = t_speaker;
+        result->dialogue = t_dialogue;
     }
-    else
-    {
-        XDD printf("(find_dialogue)    invalid format\n");
-        XDD printf("(find_dialogue)    line[0] = %c, line[1] = %c\n", line[0], line[1]);
-        XDD printf("(find_dialogue)    It should start with \"- \"\n");
-        return 0;
-    }
+    return result;
 }
 
 // find choice in line, it start with '?', success return 1, fail return 0
-int32_t hard_find_choice(char* line, char* choice, int32_t* jump_to) 
+mo_return *hard_find_choice(char* line, char* choice, int32_t* jump_to) 
 {
     if(line[0] == '?' && line[1] == ' ') {
         XD printf("(find_choice)    valid format, the choice is \"");
@@ -467,7 +471,7 @@ int32_t hard_find_choice(char* line, char* choice, int32_t* jump_to)
 }
 
 // find event in line, it start with '!', attribute return 1, bag return 2, fail return 0
-int32_t hard_find_event(char* line, char* event, char* attribute, char* operation, int32_t* value) 
+mo_return *hard_find_event(char* line, char* event, char* attribute, char* operation, int32_t* value) 
 {
     if(line[0] == '!' && line[1] == ' ') {
         XD printf("(find_event)    valid format, the event is \"");
