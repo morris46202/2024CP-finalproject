@@ -122,7 +122,8 @@ int main(int argc, char** argv){
         }
         // display_data(game_data, Sans, white, renderer);
         display_data_graph(game_data, Sans, white, renderer);
-        display_item(game_data, Sans, white, renderer);
+        // display_item(game_data, Sans, white, renderer);
+        display_item_hve(game_data, Sans, white, renderer);
         save_game(game_data, "game_data.txt");
         // show_stats(game_data);
         // printf("opt_count: %d\n", opt_count);

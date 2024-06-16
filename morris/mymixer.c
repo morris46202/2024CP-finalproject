@@ -7,6 +7,7 @@
 #include<SDL2/SDL.h>
 
 
+
 int main()
 {
     printf("this sdl_mixer test~\n");

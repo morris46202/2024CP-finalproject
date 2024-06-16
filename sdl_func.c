@@ -15,6 +15,13 @@ void init_sdl(SDL_Window** window, SDL_Renderer** renderer){
         throw_sdl_err("Could not init the SDL: %s");
     }
 
+    // if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) 
+    // {
+    //     fprintf(stderr, "Failed to initialize SDL_mixer: %s\n", Mix_GetError());
+    //     SDL_Quit();
+    //     return;
+    // }
+
     SDL_CreateWindowAndRenderer(
         SCREEN_WIDTH, SCREEN_HEIGHT,
         SDL_WINDOW_RESIZABLE,
@@ -230,6 +237,49 @@ void display_item(GameData *data, TTF_Font *Sans, SDL_Color white, SDL_Renderer 
         }
     }
     return;
+}
+
+void display_item_hve(GameData *data, TTF_Font *Sans, SDL_Color white, SDL_Renderer *renderer){
+    int item_count = 0;
+    int prev_x = 10;
+    for(int i = 0; i < 7; i++){
+        if(data -> backpack[i] != 0){
+            char item_text[32] = {0};
+            switch(i){
+                case ITEM_CARD:
+                    sprintf(item_text, "Card");
+                    break;
+                case ITEM_TICKET:
+                    sprintf(item_text, "Ticket");
+                    break;
+                case ITEM_BIKE:
+                    sprintf(item_text, "Bike");
+                    break;
+                case ITEM_TOWEL:
+                    sprintf(item_text, "Towel");
+                    break;
+                case ITEM_MIDTERM:
+                    sprintf(item_text, "Midterm");
+                    break;
+                case ITEM_FINAL:
+                    sprintf(item_text, "Final");
+                    break;
+                case ITEM_SPECIAL:
+                    sprintf(item_text, "Special");
+                    break;
+                default:
+                    break;
+            }
+            SDL_Rect item_rect = {50 + prev_x, 800, 100 + strlen(item_text) * 0.9, 30};
+            // printf("item_rect.x: %d\n", item_rect.x);s
+            prev_x += strlen(item_text) * 5 + 100;
+            SDL_Texture *item_texture = load_text(item_text, Sans, white, renderer);
+            renderTexture(item_texture, renderer, item_rect.x, item_rect.y, item_rect.w, item_rect.h);
+            item_count++;
+        }
+    }
+    return;
+
 }
 
 void draw_exit_button(TTF_Font *Sans, SDL_Color white, SDL_Renderer *renderer, SDL_Rect exit_rect){
