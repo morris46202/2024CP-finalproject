@@ -122,7 +122,7 @@ int main(int argc, char** argv){
                     readline(fp);
                 }
                 break;
-                
+
             default:
                 break;
         }
@@ -143,10 +143,11 @@ int main(int argc, char** argv){
         // renderTexture(text, renderer, 100, 600, 600, 200);
         renderTexture(message, renderer, 0, 600, message_width * 8, 25);
 
-        SDL_Rect exit_rect = {900, 800, 100, 50};
+        SDL_Rect exit_rect = {1125, 25, 50, 25};
         draw_exit_button(Sans, white, renderer, exit_rect);
 
         SDL_Rect *opt_rect = (SDL_Rect *)calloc(opt_count, sizeof(SDL_Rect));
+        SDL_Rect *border_rect = (SDL_Rect *)calloc(opt_count, sizeof(SDL_Rect));
         SDL_Texture **opt_text = (SDL_Texture **)calloc(opt_count, sizeof(SDL_Texture *));
         if(game_data->para == 31 && in_choice == 1){
             opt_count = 5;
@@ -166,10 +167,19 @@ int main(int argc, char** argv){
             }
             opt_text[i] = load_text(opt[i] -> text, Sans, white, renderer);
             opt_rect[i].x = 1150 - (8 * opt[i]->text_len) - 10;
-            opt_rect[i].y = 600 + 25 * (i + 1);
+            opt_rect[i].y = 600 + 40 * (i + 1) + 5;
             opt_rect[i].w = 8 * opt[i]->text_len;
             opt_rect[i].h = 25;
+
+            border_rect[i].x = 1150 - (8 * opt[i]->text_len) - 15;
+            border_rect[i].y = 600 + 40 * (i + 1);
+            border_rect[i].w = 8 * opt[i]->text_len + 10;
+            border_rect[i].h = 35;
+
             renderTexture(opt_text[i], renderer, opt_rect[i].x, opt_rect[i].y, opt_rect[i].w, opt_rect[i].h);
+            SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+            SDL_RenderDrawRect(renderer, &border_rect[i]);
+            // throw_sdl_err("%s\n");
             SDL_DestroyTexture(opt_text[i]);
         }
 

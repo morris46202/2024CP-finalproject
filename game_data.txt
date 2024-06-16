@@ -1,4 +1,4 @@
-para: 13
-love: 40 40 0 0 10
+para: 36
+love: 50 -5 15 10 20
 total: 90
-backpack: 0 0 2 1 0 0 0 0 0 0
+backpack: 1 0 1 0 1 1 0 0 0 0

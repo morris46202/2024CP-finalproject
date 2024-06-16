@@ -101,7 +101,7 @@ void mod_data(GameData *data, sline *line){
             Item item;
             if(strcmp(line -> attribute, "太鼓達人會員卡") == 0){
                 item = ITEM_CARD;
-            }else if(strcmp(line -> attribute, "密室逃脫券") == 0){
+            }else if(strcmp(line -> attribute, "密室逃脫體驗券") == 0){
                 item = ITEM_TICKET;
             }else if(strcmp(line -> attribute, "腳踏車") == 0){
                 item = ITEM_BIKE;
@@ -118,9 +118,9 @@ void mod_data(GameData *data, sline *line){
                 return;
             }
             if(line -> operation == '+'){
-                data -> backpack[item] += line -> value;
+                data -> backpack[item] = 1;
             }else if(line -> operation == '-'){
-                data -> backpack[item] -= line -> value;
+                data -> backpack[item] = 0;
             }else{
                 printf("Invalid operation\n");
                 return;

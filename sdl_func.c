@@ -237,36 +237,41 @@ void display_item_hve(GameData *data, TTF_Font *Sans, SDL_Color white, SDL_Rende
     int prev_x = 10;
     for(int i = 0; i < 7; i++){
         if(data -> backpack[i] != 0){
-            char item_text[32] = {0};
+            char item_text[32] = "image/item/";
             switch(i){
                 case ITEM_CARD:
-                    sprintf(item_text, "Card");
+                    strncat(item_text, "card", 5);
                     break;
                 case ITEM_TICKET:
-                    sprintf(item_text, "Ticket");
+                    strncat(item_text, "secrect", 8);
                     break;
                 case ITEM_BIKE:
-                    sprintf(item_text, "Bike");
+                    strncat(item_text, "bike", 5);
                     break;
                 case ITEM_TOWEL:
-                    sprintf(item_text, "Towel");
+                    strncat(item_text, "towel", 6);
                     break;
                 case ITEM_MIDTERM:
-                    sprintf(item_text, "Midterm");
+                    strncat(item_text, "mid", 4);
                     break;
                 case ITEM_FINAL:
-                    sprintf(item_text, "Final");
+                    strncat(item_text, "final", 6);
                     break;
                 case ITEM_SPECIAL:
-                    sprintf(item_text, "Special");
+                    strncat(item_text, "sight", 6);
                     break;
                 default:
                     break;
             }
-            SDL_Rect item_rect = {30 + prev_x, 800, strlen(item_text) * 15, 30};
-            // printf("item_rect.x: %d\n", item_rect.x);s
-            prev_x += strlen(item_text) * 15 + 20;
-            SDL_Texture *item_texture = load_text(item_text, Sans, white, renderer);
+            strncat(item_text, ".png", 5);
+            // SDL_Rect item_rect = {30 + prev_x, 800, strlen(item_text) * 15, 30};
+            // // printf("item_rect.x: %d\n", item_rect.x);s
+            // prev_x += strlen(item_text) * 15 + 20;
+            // SDL_Texture *item_texture = load_text(item_text, Sans, white, renderer);
+            // renderTexture(item_texture, renderer, item_rect.x, item_rect.y, item_rect.w, item_rect.h);
+            SDL_Rect item_rect = {10 + item_count * 120, 750, 100, 100};
+            SDL_Texture *item_texture = load_png(item_text, renderer);
+            // printf("item_text: %s\n", item_text);
             renderTexture(item_texture, renderer, item_rect.x, item_rect.y, item_rect.w, item_rect.h);
             item_count++;
         }
