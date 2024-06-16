@@ -20,11 +20,6 @@ sline *parse_line(char buff[], int len){
                 line -> kind = END;
                 break;
             }
-            if(strcmp(buff, "###") == 0){
-                line = NULL;
-                printf("file terminated\n");
-                return line;
-            }
             line -> kind = PARA;
             sscanf(buff, "#%d", &(line -> para));
             // printf("para: %d\n", line -> para);
@@ -200,6 +195,11 @@ void save_game(GameData *data, char filename[]){
                                          data -> love[2], 
                                          data -> love[3], 
                                          data -> love[4]);
+    int sum = 0;
+    for(int i = 0; i < 5; i++){
+        sum += data -> love[i];
+    }
+    data -> total = sum;
     fprintf(fp, "total: %d\n", data -> total);
     fprintf(fp, "backpack: %d %d %d %d %d %d %d %d %d %d\n", 
                                 data -> backpack[0], 

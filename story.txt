@@ -566,7 +566,7 @@ I A howard_love 15
 - J cup:這叫做那個什麼…分…分析
 - J cup:對，就是分析，我只是分析你的程式碼而已
 - J cup:哼!
-! jcup_love + 10
+! A jcup_love + 10
 - 旁白:J cup離開了現場
 I A total 40
 ? 你的成績說不定比預期的好喔 ~29~
@@ -1169,6 +1169,19 @@ I B 期中考優異證書 1
 @ school.png
 - 旁白:很快的，隨著期末考成績的公布，這個學期也即將進入尾聲
 - 旁白:而大頭，也即將邁入大學生活的下一階段
+I B 異樣的注目 1
+? 最終她的選擇是... ~62~
+I A howard_love 40
+? 最終她的選擇是... ~52~
+I A jcup_love 40
+? 最終她的選擇是... ~54~
+I A suki_love 40
+? 最終她的選擇是... ~56~
+I A tikili_love 40
+? 最終她的選擇是... ~58~
+I A shinray_love 40
+? 最終她的選擇是... ~60~
+? 最終她的選擇是... ~63~
 #END
 
 
@@ -1217,7 +1230,7 @@ I B 期中考優異證書 1
 #END
 
 #53
-@ howard.png
+@ howard.jpg
 ###
 
 #54
@@ -1262,7 +1275,7 @@ I B 期中考優異證書 1
 #END
 
 #55
-@ jcup.png
+@ jcup.jpg
 ###
 
 #56
@@ -1385,7 +1398,7 @@ I B 期中考優異證書 1
 #END
 
 #61
-@ shinray.png
+@ shinray.jpg
 ###
 
 #62

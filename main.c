@@ -165,6 +165,21 @@ int main(int argc, char** argv){
                         if(SDL_PointInRect(&mouse, &opt_rect[i]) && ev.type == SDL_MOUSEBUTTONDOWN){
                             selected_option = i;
                             printf("selected_option: %d\n", selected_option);
+                            if(game_data->para == 10){
+                                if(selected_option == 0){
+                                    game_data -> love[LOVE_TIKILI] += 10;
+                                }else if(selected_option == 1){
+                                    game_data -> love[LOVE_SHINRAY] += 10;
+                                    game_data -> love[LOVE_JCUP] += 10;
+                                }else if(selected_option == 2){
+                                    game_data -> love[LOVE_JCUP] += 10;
+                                }else if(selected_option == 3){
+                                    game_data -> love[LOVE_SUKI] += 10;
+                                }else if(selected_option == 4){
+                                    game_data -> love[LOVE_SHINRAY] += 10;
+                                }
+                                save_game(game_data, "game_data.txt");
+                            }
                             in_choice = 0;
                             jump(fp, opt[selected_option] -> jump);
                             for(int j = 0; j < opt_count; j++){
