@@ -133,7 +133,7 @@ void mod_data(GameData *data, sline *line){
     int sum = 0;
     for(int i = 0; i < 5; i++){
         sum += data -> love[i];
-        printf("sum += %d\n", data -> love[i]);
+        // printf("sum += %d\n", data -> love[i]);
     }
     // printf("total: %d\n", sum);
     data -> total = sum;
@@ -165,6 +165,8 @@ GameData *load_game(char filename[]){
                                            &(data -> love[2]), 
                                            &(data -> love[3]), 
                                            &(data -> love[4]));
+    fgets(buffer, 1024, fp);
+    sscanf(buffer, "total: %d", &(data -> total));
     fgets(buffer, 1024, fp);
     sscanf(buffer, "backpack: %d %d %d %d %d %d %d %d %d %d", 
                             &(data -> backpack[0]), 

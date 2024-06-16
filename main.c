@@ -49,6 +49,7 @@ int main(int argc, char** argv){
         }
         switch(line -> kind){
             case PARA:
+                // printf("para: %d\n", line -> para);
                 game_data -> para = line -> para;
                 save_game(game_data, "game_data.txt");
                 break;
@@ -109,7 +110,7 @@ int main(int argc, char** argv){
 
             case CONDITION:
                 int c = check_condition(game_data, line);
-                printf("condition: %d\n", c);
+                // printf("condition: %d\n", c);
                 if(c == 0){
                     printf("jump!\n");
                     readline(fp);
@@ -122,7 +123,8 @@ int main(int argc, char** argv){
         display_data(game_data, Sans, white, renderer);
         display_item(game_data, Sans, white, renderer);
         save_game(game_data, "game_data.txt");
-        show_stats(game_data);
+        // show_stats(game_data);
+        // printf("opt_count: %d\n", opt_count);
 
         //x, y, w, h
         renderTexture(scene, renderer, 0, 0, 900, 600);
@@ -135,7 +137,22 @@ int main(int argc, char** argv){
 
         SDL_Rect *opt_rect = (SDL_Rect *)calloc(opt_count, sizeof(SDL_Rect));
         SDL_Texture **opt_text = (SDL_Texture **)calloc(opt_count, sizeof(SDL_Texture *));
+        if(game_data->para == 31 && in_choice == 1){
+            opt_count = 5;
+        }
         for(int i = 0; i < opt_count; i++){
+            if(game_data->para == 31 && in_choice == 1){
+                // printf("recent opt_count: %d\n", opt_count);
+                // printf("recent i: %d\n", i);
+                if(game_data->love[LOVE_HOWARD] < 20 && i == LOVE_HOWARD){
+                    // i++;
+                    continue;
+                }
+                if(game_data->backpack[ITEM_TICKET] == 0 && i == ITEM_TICKET){
+                    // i++;
+                    continue;
+                }
+            }
             opt_text[i] = load_text(opt[i] -> text, Sans, white, renderer);
             opt_rect[i].x = 1150 - (8 * opt[i]->text_len) - 10;
             opt_rect[i].y = 600 + 25 * (i + 1);
@@ -182,6 +199,9 @@ int main(int argc, char** argv){
                             }
                             in_choice = 0;
                             jump(fp, opt[selected_option] -> jump);
+                            sline *line = parse_line(buff, strlen(buff));
+                            game_data->para = opt[selected_option] -> jump;
+                            save_game(game_data, "game_data.txt");
                             for(int j = 0; j < opt_count; j++){
                                 free(opt[j] -> text);
                                 free(opt[j] -> filepath);
