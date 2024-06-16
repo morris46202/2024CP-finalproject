@@ -30,6 +30,7 @@ typedef struct game_data{
     int para;
     int backpack[10];
     int love[5];
+    int total;
 } GameData;
 
 typedef enum item{
@@ -47,7 +48,8 @@ typedef enum love{
     LOVE_JCUP = 1,
     LOVE_SUKI = 2,
     LOVE_TIKILI = 3,
-    LOVE_SHINRAY = 4
+    LOVE_SHINRAY = 4,
+    TOTAL = 5
 } Love;
 
 enum {

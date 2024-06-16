@@ -27,7 +27,7 @@ sline *parse_line(char buff[], int len){
             }
             line -> kind = PARA;
             sscanf(buff, "#%d", &(line -> para));
-            printf("para: %d\n", line -> para);
+            // printf("para: %d\n", line -> para);
             break;
         
         case '@':
@@ -57,23 +57,25 @@ sline *parse_line(char buff[], int len){
             line -> kind = EVENT;
             line -> attribute = (char *)calloc(len, sizeof(char));
             sscanf(buff, "! %c %s %c %d", &(line -> event), line -> attribute, &(line -> operation), &(line -> value));
-            printf("event: %c\n", line -> event);
-            printf("attribute: %s\n", line -> attribute);
-            printf("operation: %c\n", line -> operation);
-            printf("value: %d\n", line -> value);
+            // printf("%s", buff);
+            // printf("event: %c\n", line -> event);
+            // printf("attribute: %s\n", line -> attribute);
+            // printf("operation: %c\n", line -> operation);
+            // printf("value: %d\n", line -> value);
             break;
 
         case 'I':
             line -> kind = CONDITION;
             line -> attribute = (char *)calloc(len, sizeof(char));
             sscanf(buff, "I %c %s %d", &(line -> event), line -> attribute, &(line -> value));
-            printf("if %s >= %d do next line\n", line -> attribute, line -> value);
+            // printf("if %s >= %d do next line\n", line -> attribute, line -> value);
             break;
     }
     return line;
 }
 
 void mod_data(GameData *data, sline *line){
+    // printf("now at: %c\n", line -> event);
     switch(line -> event){
         case 'A':
             Love love;
@@ -88,7 +90,7 @@ void mod_data(GameData *data, sline *line){
             }else if(strcmp(line -> attribute, "shinray_love") == 0){
                 love = LOVE_SHINRAY;
             }else{
-                printf("Invalid value %s\n", line -> attribute);
+                printf("mod Invalid value %s\n", line -> attribute);
                 return;
             }
             if(line -> operation == '+'){
@@ -99,6 +101,7 @@ void mod_data(GameData *data, sline *line){
                 printf("Invalid operation\n");
                 return;
             }
+            break;
         case 'B':
             Item item;
             if(strcmp(line -> attribute, "太鼓達人會員卡") == 0){
@@ -116,7 +119,7 @@ void mod_data(GameData *data, sline *line){
             }else if(strcmp(line -> attribute, "異樣的注目") == 0){
                 item = ITEM_SPECIAL;
             }else{
-                printf("Invalid value\n");
+                printf("Invalid value item %s\n", line -> attribute);
                 return;
             }
             if(line -> operation == '+'){
@@ -127,12 +130,19 @@ void mod_data(GameData *data, sline *line){
                 printf("Invalid operation\n");
                 return;
             }
+            break;
         default:
             printf("Invalid event\n");
             return;
-        
-        return;
     }
+    int sum = 0;
+    for(int i = 0; i < 5; i++){
+        sum += data -> love[i];
+        printf("sum += %d\n", data -> love[i]);
+    }
+    // printf("total: %d\n", sum);
+    data -> total = sum;
+    return;
 }
 
 GameData *load_game(char filename[]){
@@ -190,6 +200,7 @@ void save_game(GameData *data, char filename[]){
                                          data -> love[2], 
                                          data -> love[3], 
                                          data -> love[4]);
+    fprintf(fp, "total: %d\n", data -> total);
     fprintf(fp, "backpack: %d %d %d %d %d %d %d %d %d %d\n", 
                                 data -> backpack[0], 
                                 data -> backpack[1], 
@@ -283,10 +294,14 @@ int check_condition(GameData *data, sline *line){
                 love = LOVE_TIKILI;
             }else if(strcmp(line -> attribute, "shinray_love") == 0){
                 love = LOVE_SHINRAY;
+            }else if(strcmp(line -> attribute, "total") == 0){
+                love = TOTAL;
             }else{
-                printf("Invalid value %s\n", line -> attribute);
+                printf("Invalid value con%s\n", line -> attribute);
                 return 0;
             }
+            printf("if %s >= %d do next line\n", line -> attribute, line -> value);
+            printf("data -> love[love]: %d\n", data -> love[love]);
             if(data -> love[love] >= line -> value){
                 return 1;
             }
@@ -302,15 +317,18 @@ int check_condition(GameData *data, sline *line){
             }else if(strcmp(line -> attribute, "毛巾") == 0){
                 item = ITEM_TOWEL;
             }else if(strcmp(line -> attribute, "期中考優異證書") == 0){
+                printf("新增期中考優異證書\n");
                 item = ITEM_MIDTERM;
             }else if(strcmp(line -> attribute, "期末考優異證書") == 0){
                 item = ITEM_FINAL;
             }else if(strcmp(line -> attribute, "異樣的注目") == 0){
                 item = ITEM_SPECIAL;
             }else{
-                printf("Invalid value\n");
+                printf("Invalid value item con\n");
                 return 0;
             }
+            printf("if %s >= %d do next line\n", line -> attribute, line -> value);
+            printf("data -> backpack[item]: %d\n", data -> backpack[item]);
             if(data -> backpack[item] >= line -> value){
                 return 1;
             }
@@ -320,6 +338,7 @@ int check_condition(GameData *data, sline *line){
             return 0;
     }
 }
+
 void jump(FILE *fp, int para){
     // fseek(fp, 0, SEEK_SET);
     while(1){
@@ -330,7 +349,7 @@ void jump(FILE *fp, int para){
             continue;
         }
         if(line -> kind == PARA){
-            printf("-------------------------para: %d-------------------------\n", line -> para);
+            // printf("-------------------------para: %d-------------------------\n", line -> para);
             if(line -> para == para){
                 free(buff);
                 free_sline(line);

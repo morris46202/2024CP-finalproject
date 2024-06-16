@@ -61,9 +61,9 @@ int main(int argc, char** argv){
             case DIALOGUE:
                 char *speaker = (char *)calloc(10, sizeof(char));
                 char *speaker_path = get_speaker(line, speaker);
-                printf("speaker: %s\n", speaker);
+                // printf("speaker: %s\n", speaker);
                 char *dialogue = get_dialogue(line, &message_width);
-                printf("dialogue: %s\n", dialogue);
+                // printf("dialogue: %s\n", dialogue);
                 
                 char *sentence = (char *)calloc(strlen(speaker)+strlen(dialogue)+3, sizeof(char));
                 if(strcmp(line -> speaker, "大頭") == 0){
@@ -94,7 +94,7 @@ int main(int argc, char** argv){
                 opt_count = 0;
                 while(line -> kind == CHOICE){
                     opt[opt_count] = get_choice(line);
-                    printf("choice: %s\n", opt[opt_count] -> text);
+                    // printf("choice: %s\n", opt[opt_count] -> text);
                     opt_count++;
                     free_sline(line);
                     buff = readline(fp);
@@ -105,12 +105,24 @@ int main(int argc, char** argv){
             case EVENT:
                 mod_data(game_data, line);
                 save_game(game_data, "game_data.txt");
+                break;
 
+            case CONDITION:
+                int c = check_condition(game_data, line);
+                printf("condition: %d\n", c);
+                if(c == 0){
+                    printf("jump!\n");
+                    readline(fp);
+                }
+                break;
+
+            default:
                 break;
         }
         display_data(game_data, Sans, white, renderer);
         display_item(game_data, Sans, white, renderer);
-        // show_stats(game_data);
+        save_game(game_data, "game_data.txt");
+        show_stats(game_data);
 
         //x, y, w, h
         renderTexture(scene, renderer, 0, 0, 900, 600);
