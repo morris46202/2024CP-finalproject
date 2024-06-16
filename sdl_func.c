@@ -75,6 +75,7 @@ SDL_Texture *load_bmp(char *filepath, SDL_Renderer *renderer){
 SDL_Texture *load_png(char *filepath, SDL_Renderer *renderer){
     SDL_Surface *surface = IMG_Load(filepath);
     if (surface == NULL) {
+        printf("load image %s failed\n", filepath);
         throw_sdl_err("Could not load image: %s");
     }
 

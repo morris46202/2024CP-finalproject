@@ -26,7 +26,7 @@ int main(int argc, char** argv){
     int             end = 0;
 
     initSDL(&window, &renderer, &fp, &Sans);
-    GameData *game_data =   load_game("game_data.txt");
+    GameData *game_data = load_game("game_data.txt");
     if(game_data->para != 0){
         jump(fp, game_data->para);
     }
@@ -58,22 +58,32 @@ int main(int argc, char** argv){
                 free(scene_path);
                 break;
             case DIALOGUE:
-                char *speaker = get_speaker(line);
+                char *speaker = (char *)calloc(10, sizeof(char));
+                char *speaker_path = get_speaker(line, speaker);
                 printf("speaker: %s\n", speaker);
                 char *dialogue = get_dialogue(line, &message_width);
                 printf("dialogue: %s\n", dialogue);
-                if(strcmp(line -> speaker, "肌肉超人") == 0){
-                    main_character = load_png(speaker, renderer);
+                if(strcmp(line -> speaker, "大頭") == 0){
+                    main_character = load_png(speaker_path, renderer);
                 }else{
-                    other_character = load_png(speaker, renderer);
+                    other_character = load_png(speaker_path, renderer);
                 }
 
+                char *sentence = (char *)calloc(strlen(speaker)+strlen(dialogue)+3, sizeof(char));
+                message_width += strlen(speaker) + 2;
+                strncat(sentence, speaker, strlen(speaker));
+                if(strlen(speaker) != 0){
+                    strncat(sentence, ": ", 3);
+                }
+                strncat(sentence, dialogue, strlen(dialogue));
                 // printf("%s\n", dialogue);
                 // text = load_png(dialogue, renderer);
-                message = load_text(dialogue, Sans, white, renderer);
+                message = load_text(sentence, Sans, white, renderer);
 
                 free(speaker);
+                free(speaker_path);
                 free(dialogue);
+                free(sentence);
                 break;
             case CHOICE:
                 in_choice = 1;
@@ -97,7 +107,7 @@ int main(int argc, char** argv){
         }
         display_data(game_data, Sans, white, renderer);
         display_item(game_data, Sans, white, renderer);
-        show_stats(game_data);
+        // show_stats(game_data);
 
         //x, y, w, h
         renderTexture(scene, renderer, 0, 0, 900, 600);

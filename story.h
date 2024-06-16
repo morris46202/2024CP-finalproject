@@ -56,7 +56,8 @@ enum {
     CHOICE = 3,
     EVENT = 4,
     END = 5,
-    PARA = 6
+    PARA = 6,
+    CONDITION = 7
 };
 
 char *readline(FILE *fp);
@@ -71,7 +72,7 @@ void save_game(GameData *data, char filename[]);
 
 char *get_scene(sline *line);
 
-char *get_speaker(sline *line);
+char *get_speaker(sline *line, char *speaker);
 
 char *get_dialogue(sline *line, int *len);
 

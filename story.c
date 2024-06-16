@@ -206,14 +206,39 @@ char *get_scene(sline *line){
     return ret;
 }
 
-char *get_speaker(sline *line){
+char *get_speaker(sline *line, char *speaker){
     char *ret = (char *)calloc(32, sizeof(char));
-    if(strcmp(line -> speaker, "肌肉超人") == 0){
+    if(strcmp(line -> speaker, "大頭") == 0){
+        strcpy(speaker, "大頭");
         strcpy(ret, "image/character/bighead.png");
-    }else if(strcmp(line -> speaker, "洪suki") == 0){
-        strcpy(ret, "image/character/pop.png");
-    }else if(strcmp(line -> speaker, "tikili") == 0){
+    }
+    else if(strcmp(line -> speaker, "洪好き") == 0){
+        strcpy(speaker, "洪好き");
+        strcpy(ret, "image/character/suki.png");
+    }
+    else if(strcmp(line -> speaker, "Tikili") == 0){
+        strcpy(speaker, "Tikili");
         strcpy(ret, "image/character/tikili.png");
+    }
+    else if (strcmp(line -> speaker, "女號千") == 0){
+        strcpy(speaker, "女號千");
+        strcpy(ret, "image/character/howard.png");
+    }
+    else if (strcmp(line -> speaker, "林欣芮") == 0){
+        strcpy(speaker, "林欣芮");
+        strcpy(ret, "image/character/shinray.png");
+    }
+    else if (strcmp(line -> speaker, "L紀") == 0){
+        strcpy(speaker, "L紀");
+        strcpy(ret, "image/character/L_age.png");
+    }
+    else if (strcmp(line -> speaker, "媽媽") == 0){
+        strcpy(speaker, "媽媽");
+        strcpy(ret, "image/character/mom.png");
+    }
+     else if (strcmp(line -> speaker, "J cup") == 0){
+        strcpy(speaker, "J cup");
+        strcpy(ret, "image/character/jcup.png");
     }
     return ret;
 }
