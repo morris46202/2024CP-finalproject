@@ -310,6 +310,7 @@ void hard_read_story(char* filename)
         printf("Error: File not found.\n");
         return;
     }
+    //hi
     char *line = calloc(2024, sizeof(char));
     while(!feof(file)) 
     {
