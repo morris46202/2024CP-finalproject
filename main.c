@@ -68,7 +68,13 @@ int main(int argc, char** argv){
                 
                 char *sentence = (char *)calloc(strlen(speaker)+strlen(dialogue)+3, sizeof(char));
                 if(strcmp(line -> speaker, "大頭") == 0){
-                    main_character = load_png(speaker_path, renderer);
+                    if(game_data->total >= 70){
+                        main_character = load_png("image/character/bighead_so_happy.png", renderer);
+                    }else if(game_data->total >= 40){
+                        main_character = load_png("image/character/bighead_happy.png", renderer);
+                    }else{
+                        main_character = load_png(speaker_path, renderer);
+                    }
                 }else{
                     other_character = load_png(speaker_path, renderer);
                 }
@@ -116,7 +122,7 @@ int main(int argc, char** argv){
                     readline(fp);
                 }
                 break;
-
+                
             default:
                 break;
         }

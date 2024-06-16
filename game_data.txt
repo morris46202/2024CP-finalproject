@@ -1,4 +1,4 @@
-para: 0
-love: 0 0 0 0 0
-total: 0
-backpack: 0 0 0 0 0 0 0 0 0 0
+para: 13
+love: 40 40 0 0 10
+total: 90
+backpack: 0 0 2 1 0 0 0 0 0 0

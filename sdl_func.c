@@ -15,13 +15,6 @@ void init_sdl(SDL_Window** window, SDL_Renderer** renderer){
         throw_sdl_err("Could not init the SDL: %s");
     }
 
-    // if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) 
-    // {
-    //     fprintf(stderr, "Failed to initialize SDL_mixer: %s\n", Mix_GetError());
-    //     SDL_Quit();
-    //     return;
-    // }
-
     SDL_CreateWindowAndRenderer(
         SCREEN_WIDTH, SCREEN_HEIGHT,
         SDL_WINDOW_RESIZABLE,
@@ -270,9 +263,9 @@ void display_item_hve(GameData *data, TTF_Font *Sans, SDL_Color white, SDL_Rende
                 default:
                     break;
             }
-            SDL_Rect item_rect = {50 + prev_x, 800, 100 + strlen(item_text) * 0.9, 30};
+            SDL_Rect item_rect = {30 + prev_x, 800, strlen(item_text) * 15, 30};
             // printf("item_rect.x: %d\n", item_rect.x);s
-            prev_x += strlen(item_text) * 5 + 100;
+            prev_x += strlen(item_text) * 15 + 20;
             SDL_Texture *item_texture = load_text(item_text, Sans, white, renderer);
             renderTexture(item_texture, renderer, item_rect.x, item_rect.y, item_rect.w, item_rect.h);
             item_count++;

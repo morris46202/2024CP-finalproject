@@ -59,7 +59,7 @@ enum {
     EVENT = 4,
     END = 5,
     PARA = 6,
-    CONDITION = 7
+    CONDITION = 7,
 };
 
 char *readline(FILE *fp);
