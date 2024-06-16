@@ -25,7 +25,11 @@ SDL_Texture *load_text(char *text, TTF_Font *font, SDL_Color color, SDL_Renderer
 
 void display_data(GameData *data, TTF_Font *Sans, SDL_Color white, SDL_Renderer *renderer);
 
+void display_data_graph(GameData *data, TTF_Font *Sans, SDL_Color white, SDL_Renderer *renderer);
+
 void display_item(GameData *data, TTF_Font *Sans, SDL_Color white, SDL_Renderer *renderer);
+
+void draw_exit_button(TTF_Font *Sans, SDL_Color white, SDL_Renderer *renderer, SDL_Rect exit_rect);
 
 void show_stats(GameData *data);
 

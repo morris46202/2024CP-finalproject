@@ -120,7 +120,8 @@ int main(int argc, char** argv){
             default:
                 break;
         }
-        display_data(game_data, Sans, white, renderer);
+        // display_data(game_data, Sans, white, renderer);
+        display_data_graph(game_data, Sans, white, renderer);
         display_item(game_data, Sans, white, renderer);
         save_game(game_data, "game_data.txt");
         // show_stats(game_data);
@@ -134,6 +135,9 @@ int main(int argc, char** argv){
         renderTexture(main_character, renderer, 650, 350, 250, 250);
         // renderTexture(text, renderer, 100, 600, 600, 200);
         renderTexture(message, renderer, 0, 600, message_width * 8, 25);
+
+        SDL_Rect exit_rect = {900, 800, 100, 50};
+        draw_exit_button(Sans, white, renderer, exit_rect);
 
         SDL_Rect *opt_rect = (SDL_Rect *)calloc(opt_count, sizeof(SDL_Rect));
         SDL_Texture **opt_text = (SDL_Texture **)calloc(opt_count, sizeof(SDL_Texture *));
@@ -173,10 +177,9 @@ int main(int argc, char** argv){
                     end = 1;
                     break;
                 }
-
+            SDL_Point mouse;
+            SDL_GetMouseState(&mouse.x, &mouse.y);
                 if(in_choice == 1){
-                    SDL_Point mouse;
-                    SDL_GetMouseState(&mouse.x, &mouse.y);
                     // SDL_Texture *cursor = load_text("<", Sans, yellow, renderer);
                     for(int i = 0; i < opt_count; i++){
                         if(SDL_PointInRect(&mouse, &opt_rect[i]) && ev.type == SDL_MOUSEBUTTONDOWN){
@@ -211,6 +214,12 @@ int main(int argc, char** argv){
                             break;
                         }
                     }
+                }
+
+                if(SDL_PointInRect(&mouse, &exit_rect) && ev.type == SDL_MOUSEBUTTONDOWN){
+                    printf("exit\n");
+                    end = 1;
+                    break;
                 }
 
             }

@@ -149,6 +149,50 @@ void display_data(GameData *data, TTF_Font *Sans, SDL_Color white, SDL_Renderer 
     // }
 }
 
+void display_data_graph(GameData *data, TTF_Font *Sans, SDL_Color white, SDL_Renderer *renderer){
+    int love_count = 0;
+    int item_count = 0;
+    
+    for(int i = 0; i < 5; i++){
+        SDL_Rect love_rect = {900, 10 + i * 90, 70, 70};
+        SDL_Rect text_rect = {1000, 10 + i * 95, 50, 50};
+        SDL_Texture *love_texture;
+        SDL_Texture *text_texture;
+        char path[128] = {"image/head/"};
+        char text[32] = {0};
+        switch(i){
+            case LOVE_HOWARD:
+                strcat(path, "howard.png");
+                break;
+            case LOVE_JCUP:
+                strcat(path, "jcup.png");
+                break;
+            case LOVE_SUKI:
+                strcat(path, "suki.png");
+                break;
+            case LOVE_TIKILI:
+                strcat(path, "tikili.png");
+                break;
+            case LOVE_SHINRAY:
+                strcat(path, "shinray.png");
+                break;
+            default:
+                break;
+        }
+
+        sprintf(text, "%d", data -> love[i]);
+        love_texture = load_png(path, renderer);
+        text_texture = load_text(text, Sans, white, renderer);
+        text_rect.w = strlen(text) * 25;
+        
+        renderTexture(love_texture, renderer, love_rect.x, love_rect.y, love_rect.w, love_rect.h);
+        renderTexture(text_texture, renderer, text_rect.x, text_rect.y, text_rect.w, text_rect.h);
+    
+        SDL_DestroyTexture(love_texture);
+        SDL_DestroyTexture(text_texture);
+    }
+}
+
 void display_item(GameData *data, TTF_Font *Sans, SDL_Color white, SDL_Renderer *renderer){
     int item_count = 0;
     for(int i = 0; i < 7; i++){
@@ -179,13 +223,18 @@ void display_item(GameData *data, TTF_Font *Sans, SDL_Color white, SDL_Renderer 
                 default:
                     break;
             }
-            SDL_Rect item_rect = {900, 400 + item_count * 50, strlen(item_text) * 10, 25};
+            SDL_Rect item_rect = {900, 500 + item_count * 50, strlen(item_text) * 10, 25};
             SDL_Texture *item_texture = load_text(item_text, Sans, white, renderer);
             renderTexture(item_texture, renderer, item_rect.x, item_rect.y, item_rect.w, item_rect.h);
             item_count++;
         }
     }
     return;
+}
+
+void draw_exit_button(TTF_Font *Sans, SDL_Color white, SDL_Renderer *renderer, SDL_Rect exit_rect){
+    SDL_Texture *exit_texture = load_text("Exit", Sans, white, renderer);
+    renderTexture(exit_texture, renderer, exit_rect.x, exit_rect.y, exit_rect.w, exit_rect.h);
 }
 
 void show_stats(GameData *data){
