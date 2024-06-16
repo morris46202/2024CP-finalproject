@@ -189,11 +189,12 @@ void display_item(GameData *data, TTF_Font *Sans, SDL_Color white, SDL_Renderer 
 }
 
 void show_stats(GameData *data){
-    printf("女號千: %d\n", data -> love[0]);
-    printf("Jcup: %d\n", data -> love[1]);
-    printf("洪suk: %d\n", data -> love[2]);
-    printf("Tikili: %d\n", data -> love[3]);
-    printf("林欣芮: %d\n", data -> love[4]);
+    // printf("女號千: %d\n", data -> love[0]);
+    // printf("Jcup: %d\n", data -> love[1]);
+    // printf("洪suk: %d\n", data -> love[2]);
+    // printf("Tikili: %d\n", data -> love[3]);
+    // printf("林欣芮: %d\n", data -> love[4]);
+    printf("total: %d\n", data -> total);
 }
 
 void renderTexture(SDL_Texture *tex, SDL_Renderer *renderer, int x, int y, int w, int h){
