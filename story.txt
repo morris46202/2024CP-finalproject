@@ -568,7 +568,7 @@ I A howard_love 15
 - J cup:哼!
 ! A jcup_love + 10
 - 旁白:J cup離開了現場
-I A total 40
+I A total 50
 ? 你的成績說不定比預期的好喔 ~29~
 ? 一般成績公布 ~30~
 #END
@@ -586,7 +586,7 @@ I A total 40
 - 洪好き:做得很快嘛，看來你的程設能力已經進步很多了呢
 ! A suki_love + 5
 - 大頭:謝謝助教!我相信這一定會幫到我的期中考的
-I A total 40
+I A total 50
 ? 你的成績說不定比預期的好喔 ~29~
 ? 一般成績公布 ~30~
 #END
@@ -606,10 +606,10 @@ I A total 40
 - 旁白:獲得道具"密室逃脫體驗券"
 - 大頭:太感謝了，助教有你真好
 - 旁白:(Tikili臉上閃過一抹紅暈)
-- Tikili:你考完是我再帶你一起去
+- Tikili:你考完試我再帶你一起去
 - 大頭:好的，謝謝助教
 ! A tikili_love + 10
-I A total 40
+I A total 50
 ? 你的成績說不定比預期的好喔 ~29~
 ? 一般成績公布 ~30~
 #END
@@ -636,7 +636,7 @@ I A total 40
 - 林欣芮:話說回來…
 - 旁白:接著林欣芮繼續講解大頭的問題…
 ! A shinray_love + 5
-I A total 40
+I A total 50
 ? 你的成績說不定比預期的好喔 ~29~
 ? 一般成績公布 ~30~
 #END
@@ -664,7 +664,7 @@ I A total 40
 - 大頭:好的，我會的
 - 大頭:謝謝助教的鼓勵!!!
 ! A howard_love + 5
-I A total 40
+I A total 50
 ? 你的成績說不定比預期的好喔 ~29~
 ? 一般成績公布 ~30~
 #END
@@ -1012,7 +1012,7 @@ I A howard_love 20
 - 大頭:這樣我的期末考應該就沒問題了
 - 大頭:謝謝學姊~
 ! A suki_love + 5
-I A total 65
+I A total 75
 ? 你的成績說不定比預期的好喔 ~48~
 ? 一般成績公布 ~49~
 #END
@@ -1037,7 +1037,7 @@ I A total 65
 - 大頭:沒有拉，這是我發自內心的佩服
 - J cup:…怎麼可能
 ! A jcup_love + 5
-I A total 65
+I A total 75
 ? 你的成績說不定比預期的好喔 ~48~
 ? 一般成績公布 ~49~
 #END
@@ -1064,7 +1064,7 @@ I A total 65
 - 大頭:謝謝世界無敵超級可愛漂亮聰明的學姊!!!
 - Tikili:恩，說得好
 ! A tikili_love + 10
-I A total 65
+I A total 75
 ? 你的成績說不定比預期的好喔 ~48~
 ? 一般成績公布 ~49~
 #END
@@ -1087,7 +1087,7 @@ I A total 65
 - 旁白:林欣芮拍了一下大頭的後背
 - 林欣芮:不用客氣，期末考要加油喔
 ! A shinray_love + 10
-I A total 65
+I A total 75
 ? 你的成績說不定比預期的好喔 ~48~
 ? 一般成績公布 ~49~
 #END
@@ -1113,7 +1113,7 @@ I A total 65
 - 女號千:…
 - 女號千:…不客氣
 ! A howard_love + 10
-I A total 65
+I A total 75
 ? 你的成績說不定比預期的好喔 ~48~
 ? 一般成績公布 ~49~
 #END
@@ -1169,19 +1169,6 @@ I B 期中考優異證書 1
 @ school.png
 - 旁白:很快的，隨著期末考成績的公布，這個學期也即將進入尾聲
 - 旁白:而大頭，也即將邁入大學生活的下一階段
-I B 異樣的注目 1
-? 最終她的選擇是... ~62~
-I A howard_love 40
-? 最終她的選擇是... ~52~
-I A jcup_love 40
-? 最終她的選擇是... ~54~
-I A suki_love 40
-? 最終她的選擇是... ~56~
-I A tikili_love 40
-? 最終她的選擇是... ~58~
-I A shinray_love 40
-? 最終她的選擇是... ~60~
-? 最終她的選擇是... ~63~
 #END
 
 
@@ -1230,7 +1217,7 @@ I A shinray_love 40
 #END
 
 #53
-@ howard.jpg
+@ howard.png
 ###
 
 #54
@@ -1275,7 +1262,7 @@ I A shinray_love 40
 #END
 
 #55
-@ jcup.jpg
+@ jcup.png
 ###
 
 #56
@@ -1398,7 +1385,7 @@ I A shinray_love 40
 #END
 
 #61
-@ shinray.jpg
+@ shinray.png
 ###
 
 #62
