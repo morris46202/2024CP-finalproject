@@ -78,6 +78,8 @@ char *get_dialogue(sline *line, int *len);
 
 Option *get_choice(sline *line);
 
+int check_condition(GameData *data, sline *line);
+
 void jump(FILE *fp, int para);
 
 void free_sline(sline *line);

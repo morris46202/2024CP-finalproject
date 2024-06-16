@@ -24,6 +24,7 @@ int main(int argc, char** argv){
     Option         *opt[10];
     int             opt_count = 0;
     int             end = 0;
+    int             narrator = 0;
 
     initSDL(&window, &renderer, &fp, &Sans);
     GameData *game_data = load_game("game_data.txt");
@@ -63,17 +64,19 @@ int main(int argc, char** argv){
                 printf("speaker: %s\n", speaker);
                 char *dialogue = get_dialogue(line, &message_width);
                 printf("dialogue: %s\n", dialogue);
+                
+                char *sentence = (char *)calloc(strlen(speaker)+strlen(dialogue)+3, sizeof(char));
                 if(strcmp(line -> speaker, "大頭") == 0){
                     main_character = load_png(speaker_path, renderer);
                 }else{
                     other_character = load_png(speaker_path, renderer);
                 }
-
-                char *sentence = (char *)calloc(strlen(speaker)+strlen(dialogue)+3, sizeof(char));
-                message_width += strlen(speaker) + 2;
-                strncat(sentence, speaker, strlen(speaker));
                 if(strlen(speaker) != 0){
+                    message_width += strlen(speaker) + 2;
+                    strncat(sentence, speaker, strlen(speaker));
                     strncat(sentence, ": ", 3);
+                }else{
+                    narrator = 1;
                 }
                 strncat(sentence, dialogue, strlen(dialogue));
                 // printf("%s\n", dialogue);
@@ -91,7 +94,7 @@ int main(int argc, char** argv){
                 opt_count = 0;
                 while(line -> kind == CHOICE){
                     opt[opt_count] = get_choice(line);
-                    // printf("choice: %s\n", item_path[item_count]);
+                    printf("choice: %s\n", opt[opt_count] -> text);
                     opt_count++;
                     free_sline(line);
                     buff = readline(fp);
@@ -111,19 +114,23 @@ int main(int argc, char** argv){
 
         //x, y, w, h
         renderTexture(scene, renderer, 0, 0, 900, 600);
+        // printf("narrator: %d\n", narrator);
         renderTexture(other_character, renderer, 0, 350, 250, 250);
+        // narrator = 0;
         renderTexture(main_character, renderer, 650, 350, 250, 250);
         // renderTexture(text, renderer, 100, 600, 600, 200);
         renderTexture(message, renderer, 0, 600, message_width * 8, 25);
 
         SDL_Rect *opt_rect = (SDL_Rect *)calloc(opt_count, sizeof(SDL_Rect));
+        SDL_Texture **opt_text = (SDL_Texture **)calloc(opt_count, sizeof(SDL_Texture *));
         for(int i = 0; i < opt_count; i++){
-            opt_tmp = load_text(opt[i] -> text, Sans, white, renderer);
+            opt_text[i] = load_text(opt[i] -> text, Sans, white, renderer);
             opt_rect[i].x = 1150 - (8 * opt[i]->text_len) - 10;
             opt_rect[i].y = 600 + 25 * (i + 1);
             opt_rect[i].w = 8 * opt[i]->text_len;
             opt_rect[i].h = 25;
-            renderTexture(opt_tmp, renderer, opt_rect[i].x, opt_rect[i].y, opt_rect[i].w, opt_rect[i].h);
+            renderTexture(opt_text[i], renderer, opt_rect[i].x, opt_rect[i].y, opt_rect[i].w, opt_rect[i].h);
+            SDL_DestroyTexture(opt_text[i]);
         }
 
         SDL_RenderPresent(renderer);
@@ -169,7 +176,8 @@ int main(int argc, char** argv){
     } // window loop
 
     SDL_DestroyTexture(message);
-
+    SDL_DestroyTexture(main_character);
+    SDL_DestroyTexture(other_character);
     SDL_DestroyTexture(scene);
     SDL_FreeSurface(screen);
 
